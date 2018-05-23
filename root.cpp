@@ -65,7 +65,7 @@ int authenticate(char username[], char password[]) {
 	return -1;
 }
 
-void dashboard(int session_id) {
+int dashboard(int session_id) {
 	system("clear");
 	line(80, true);
 	line(15, false);
@@ -89,7 +89,7 @@ void dashboard(int session_id) {
 			case 3:
 					break;
 			case 4:
-					welcome();
+					return 0;
 		}
 	}
 }
@@ -120,8 +120,8 @@ void login() {
 int main() {
 	system("clear");
 	initialisedb();
-	welcome();
 	while(true) {
+		welcome();
 		int choice;
 		printf("\n\nYour choice: ");
 		scanf("%d", &choice);
