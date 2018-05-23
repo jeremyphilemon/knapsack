@@ -14,7 +14,7 @@ struct student {
 	char name[25];
 	char username[25];
 	char password[25];
-	struct course courses[];
+	struct course courses[5];
 }students[5];
 
 void initialisedb() {
@@ -38,7 +38,7 @@ void initialisedb() {
 	strcpy(students[4].username, "15bme2341");
 	strcpy(students[4].password, "vit123456");
 
-	strcpy(courses[0].name, "CHEM1001");
+	strcpy(courses[0].name, "CHY");
 	courses[0].credits = 5;
 
 	strcpy(courses[1].name, "DLD");
@@ -50,7 +50,7 @@ void initialisedb() {
 	strcpy(courses[3].name, "IWP");
 	courses[3].credits = 4;
 
-	strcpy(courses[4].name, "German");
+	strcpy(courses[4].name, "GER");
 	courses[4].credits = 2;
 
 	strcpy(courses[5].name, "MGMT");
@@ -108,7 +108,7 @@ void view_courses() {
 	scanf("%d", &blackhole);
 }
 
-void choose_courses() {
+void choose_courses(int session_id) {
 	while(true) {
 		system("clear");
 		line(80, true);
@@ -123,6 +123,23 @@ void choose_courses() {
 		line(18, true);
 		printf("## Wishlist\n");
 		line(18, true);
+		while(true) {
+			int choice, iterator=0;
+			while(students[session_id].courses[iterator].name[0]!='\0') {
+				printf("\t%s\n", courses[iterator].name);
+				iterator++;
+			}
+			printf("\n\t1) Select a course");
+			printf("\n\t2) Delete a course");
+			printf("\n\nYour choice: ");
+			scanf("%d", &choice);
+			switch(choice) {
+				case 1:
+					break;
+				case 2:
+					break;
+			}
+		}
 	}
 }
 
@@ -147,7 +164,7 @@ int dashboard(int session_id) {
 				view_courses();
 				break;
 			case 2:
-				choose_courses();
+				choose_courses(session_id);
 				break;
 			case 3:
 				break;
