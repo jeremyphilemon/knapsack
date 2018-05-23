@@ -14,7 +14,7 @@ struct student {
 	char name[25];
 	char username[25];
 	char password[25];
-	struct course courses[5];
+	struct course courses[10];
 }students[5];
 
 void initialisedb() {
@@ -22,7 +22,7 @@ void initialisedb() {
 	strcpy(students[0].username, "16bce1367");
 	strcpy(students[0].password, "jerry1998");
 
-	strcpy(students[1].name, "\0Vishhvak");
+	strcpy(students[1].name, "Vishhvak");
 	strcpy(students[1].username, "16bce1269");
 	strcpy(students[1].password, "vish1998");
 
@@ -120,13 +120,13 @@ void add_course(int session_id) {
 			err=1;
 			break;
 		}
-		iterator++;
 		credits+=students[session_id].courses[iterator].credits;
+		iterator++;
 	}
-	if(credits+courses[course_index].credits<=16) {
+	if(credits+courses[course_index-1].credits<=16) {
 		students[session_id].courses[iterator] = courses[course_index-1];
 	}
-	else if(credits+courses[course_index].credits>16) {
+	else if(credits+courses[course_index-1].credits>16) {
 		printf("\n\t\t\tYou are exceeding your credits!");
 		err=1;
 	}
