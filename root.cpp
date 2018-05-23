@@ -22,7 +22,7 @@ void initialisedb() {
 	strcpy(students[0].username, "16bce1367");
 	strcpy(students[0].password, "jerry1998");
 
-	strcpy(students[1].name, "Vishhvak");
+	strcpy(students[1].name, "\0Vishhvak");
 	strcpy(students[1].username, "16bce1269");
 	strcpy(students[1].password, "vish1998");
 
@@ -108,7 +108,40 @@ void view_courses() {
 	scanf("%d", &blackhole);
 }
 
-void choose_courses(int session_id) {
+void add_course(int session_id) {
+	int err=0;
+	int course_index, credits=0;
+	printf("Which course would you like to add: ");
+	scanf("%d", &course_index);
+	int iterator=0;
+	while(students[session_id].courses[iterator].name[0]!='\0') {
+		if(strcmp(courses[course_index-1].name, students[session_id].courses[iterator].name)==0) {
+			printf("\n\t\t\tYou have already added that course!");
+			err=1;
+			break;
+		}
+		iterator++;
+		credits+=students[session_id].courses[iterator].credits;
+	}
+	if(credits+courses[course_index].credits<=16) {
+		students[session_id].courses[iterator] = courses[course_index-1];
+	}
+	else if(credits+courses[course_index].credits>16) {
+		printf("\n\t\t\tYou are exceeding your credits!");
+		err=1;
+	}
+	if(err) {
+		int blackhole;
+		printf("\n\nEnter anything to try again (preferably numbers) ");
+		scanf("%d", &blackhole);
+	}
+} 
+
+void delete_course(int session_id) {
+
+}
+
+int choose_courses(int session_id) {
 	while(true) {
 		system("clear");
 		line(80, true);
@@ -123,22 +156,28 @@ void choose_courses(int session_id) {
 		line(18, true);
 		printf("## Wishlist\n");
 		line(18, true);
-		while(true) {
-			int choice, iterator=0;
-			while(students[session_id].courses[iterator].name[0]!='\0') {
-				printf("\t%s\n", courses[iterator].name);
-				iterator++;
-			}
-			printf("\n\t1) Select a course");
-			printf("\n\t2) Delete a course");
-			printf("\n\nYour choice: ");
-			scanf("%d", &choice);
-			switch(choice) {
-				case 1:
-					break;
-				case 2:
-					break;
-			}
+		printf("\n");
+		int choice, iterator=0, credits=0;
+		while(students[session_id].courses[iterator].name[0]!='\0') {
+			credits+=students[session_id].courses[iterator].credits;
+			printf("\t%c) %s\n", iterator+65, students[session_id].courses[iterator].name);
+			iterator++;
+		}
+		printf("\tCredits: %d\n", credits);
+		printf("\n\t1) Add a course");
+		printf("\n\t2) Delete a course");
+		printf("\n\t3) Go back to dashboard");
+		printf("\n\nYour choice: ");
+		scanf("%d", &choice);
+		switch(choice) {
+			case 1:
+				add_course(session_id);
+				break;
+			case 2:
+				delete_course(session_id);
+				break;
+			case 3:
+				return 0;
 		}
 	}
 }
