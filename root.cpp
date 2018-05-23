@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+int failed=0;
+
 struct course {
 	char name;
 	char credits;
@@ -110,10 +112,11 @@ void login() {
 	scanf(" %s", &password[0]);
 	int is_authenticated = authenticate(username, password);
 	if(is_authenticated!=-1) {
+		failed = 0;
 		dashboard(is_authenticated);
 	}
 	else {
-		welcome(1);
+		failed = 1;
 	}
 }
 
@@ -121,7 +124,7 @@ int main() {
 	system("clear");
 	initialisedb();
 	while(true) {
-		welcome();
+		welcome(failed);
 		int choice;
 		printf("\n\nYour choice: ");
 		scanf("%d", &choice);
